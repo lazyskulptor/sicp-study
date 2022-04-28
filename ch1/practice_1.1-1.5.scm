@@ -39,11 +39,11 @@
 (/ (+ 5 4 (- 2 (- 3 (+ 6 (/ 4 5))))) (* 3 (- 6 2) (- 2 7)))
 
 ; practice 1.3 
+(define (square x) (* x x))
+(define (sum-of-square x y) (+ (square x) (square y)))
 (define (op1 a b c) (if (or (> a b) (= a b))
 			(sum-of-square a (if (or (> b c) (= b c)) b c))
 			(sum-of-square b (if (or (> b c) (= b c)) a c))))
-(define (sum-of-square x y) (+ (square x) (square y)))
-(define (square x) (* x x))
        
 ;;; practice 1.4 
 

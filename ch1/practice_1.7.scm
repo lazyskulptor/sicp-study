@@ -12,9 +12,10 @@
   )
 )
 
+;; 큰 숫자의 경우 차이가 0.001 보다 작아지지 않음.
+
 
 ; 개선된 프로시져. 
-;TODO: 답이 맞는지 확인 필요
 ; 
 
 (define (improve guess x)
@@ -24,7 +25,7 @@
   (/ (+ x y) 2))
 
 (define (good-enough? guess new-guess)
-  (< (abs (- guess new-guess)) 0.001))
+  (< (abs (- guess new-guess)) (* new-guess 0.001)))
 
 (define (sqrt x)
   (sqrt-iter 1.0 x))

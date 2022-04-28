@@ -10,7 +10,7 @@
 )
 
 (define (good-enough? guess new-guess)
-  (< (abs (- guess new-guess)) 0.001))
+  (< (abs (- guess new-guess)) (* new-guess 0.001)))
 
 (define (improve guess x)
   (/ 3 (+ (/ y (* x x)) (* 2 y)))
