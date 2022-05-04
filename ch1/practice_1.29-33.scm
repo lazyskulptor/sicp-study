@@ -48,3 +48,31 @@
         result
         (iter (next a) (* result (term a)))))
   (iter a 1))
+
+;; 1.32.b
+
+(define (accumulate-iter combiner null-value term a next b)
+  (define (iter result a)
+    (if (> a b)
+        result
+        (iter (combiner result (term a) (next a)))))
+  (iter null-value a))
+
+
+;; 1.33
+(define (accumulate-filter combiner null-value term a next b predicate)
+  (if (> a b)
+      null-value
+      (let ((v (term a)))
+        (combiner (if (predicate a) (term a) null-value)
+                  (accumulate-filter combiner null-value term (next a) next b predicate)))))
+
+(define (sum-prime a b)
+  (define (square x) (* x x))
+  (define (inc x) (+ x 1))
+  (accumulate-filter + 0 square a inc b prime?))
+
+(define (product-prime n)
+  (define (identity x) x)
+  (define (inc x) (+ x 1))
+  (accumulate-filter * 1 identity 2 inc (- n 1) gcd))
