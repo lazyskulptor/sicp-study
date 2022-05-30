@@ -1,4 +1,4 @@
-;; Exercise 2.73-74
+;; Exercise 2.73-76
 
 ;; 2.73
 (define (deriv exp var)
