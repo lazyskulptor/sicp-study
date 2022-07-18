@@ -39,3 +39,22 @@
 
 (estimate-pi2 100000)
 ;Value: 3.14428
+
+
+;; 3.6
+;; GIVEN
+(define rand
+  (let ((x random-init))
+    (lambda ()
+      (set! x (rand-update x))
+      x)))
+
+;; SOLUTION
+(define rand
+  (let ((x random-init))
+    (lambda (mode)
+      (cond ((eq? mode 'generage)
+             (set! x (rand-update x))
+             x)
+            ((eq? mode 'reset)
+             (lambda (val) (set! x val)))))))
