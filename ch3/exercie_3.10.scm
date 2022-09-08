@@ -1,4 +1,4 @@
-;; Exercise 3.9
+;; Exercise 3.10
 
 ;; Case 1
 (define (make-withdraw balance)
