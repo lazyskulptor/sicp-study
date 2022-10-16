@@ -136,27 +136,39 @@
       (last-pair (cdr x))))
 
 ;;
-
 (define (count-pairs-2 x)
   (define (contains list e)
     (cond ((null? list) false)
-          ((eq? (car (car list)) e) true)
+          ((eq? (car list) e) true)
           (else (contains (cdr list) e))))
-  (let ((stack '()))
-    (define (worker sub)
-
-      ))
+  (define memo (list 't))
   (define (worker sub)
-    (cond ((not (pair? sub)) 0)
-          ((contains memo sub) (- (length memo) 1))
-          (else
-           (append! memo (cons sub '()))
-           (display sub)
-           (newline)
-           (display memo)
-           (newline)
-           (- (+ 1
-                 (worker (car sub) memo)
-                 (worker (cdr sub) memo))
-              (- (length memo) 1)))))
-  (worker x (list (cons 'memo '()))))
+    (when (and (pair? sub) (not (contains memo sub)))
+      (append! memo (cons sub '()))
+      (worker (car sub))
+      (worker (cdr sub))))
+  (worker x)
+  (- (length memo) 1))
+
+
+;; Exercie 3.18
+(define (cycle? x)
+  (define (contains list e)
+    (cond ((null? list) false)
+          ((eq? (car list) e) true)
+          (else (contains (cdr list) e))))
+  (define memo (list 't))
+  (define cycle-flag false)
+  (define (worker sub)
+    (when (not cycle-flag)
+        (cond ((contains memo sub)
+               (set! cycle-flag true))
+              ((pair? sub)
+               (append! memo (cons sub '()))
+               (worker (car sub))
+               (worker (cdr sub))))))
+  (worker x)
+  cycle-flag)
+
+
+;; Exercise 3.19
