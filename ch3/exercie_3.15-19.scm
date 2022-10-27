@@ -153,22 +153,22 @@
 
 ;; Exercie 3.18
 (define (cycle? x)
-  (define (contains list e)
-    (cond ((null? list) false)
-          ((eq? (car list) e) true)
-          (else (contains (cdr list) e))))
-  (define memo (list 't))
-  (define cycle-flag false)
-  (define (worker sub)
-    (when (not cycle-flag)
-        (cond ((contains memo sub)
-               (set! cycle-flag true))
-              ((pair? sub)
-               (append! memo (cons sub '()))
-               (worker (car sub))
-               (worker (cdr sub))))))
-  (worker x)
-  cycle-flag)
+  (define (worker head sub)
+    (cond ((not (pair? sub)) false)
+          ((or (worker head (car sub)) (worker head (cdr sub))) true)
+          (else (worker (cdr sub) (cdr sub)))))
+  (worker x x))
 
 
 ;; Exercise 3.19
+;; In case there is cycle in (car x), I couldn't find the way.
+;; The answer where cycle is in only next point.
+;; Tortoise and Hare Algorithm.
+(define (cycle? x)
+  (define (worker head sub)
+    (cond ((not (pair? head)) false)
+          ((eq? head sub) true)
+          ((null? (cdr sub)) false)
+          (else (worker (cdr head) (cddr sub)))))
+  (and (pair? x)
+      (worker x (cdr x))))
